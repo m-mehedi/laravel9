@@ -17,6 +17,7 @@ use App\Http\Controllers\PostController;
 */
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
+Route::get('post/delete/{id}', [PostController::class, 'destroy'])->middleware('auth:api');
 Route::middleware('auth:api')->group(function () {
     Route::resource('posts', PostController::class);
 });
