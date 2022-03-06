@@ -66,4 +66,76 @@ class UserTableSeeder extends Seeder
     }
 }
 ```
-** The run() method in the above code snippet will create 10 new users using the User factory. **
+**The run() method in the above code snippet will create 10 new users using the User factory.**
+
+## Factories in Laravel
+Factories are a way to put values in fields of a particular model automatically. Like, for testing when we add multiple fake records in the database, we can use factories to generate a class for each model and put data in fields accordingly.
+Laravel comes with: 
+> database/factories/UserFactory.php
+
+We can crate new factory by:
+`php artisan make:factory UserFactory --class=User`
+
+Factory Example:
+```
+<?php
+
+namespace Database\Factories;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class UserFactory extends Factory
+{
+   /**
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
+   protected $model = User::class;
+
+   /**
+    * Define the model's default state.
+    *
+    * @return array
+    */
+   public function definition()
+   {
+       return [
+           'name' => $this->faker->name,
+           'email' => $this->faker->unique()->safeEmail,
+           'email_verified_at' => now(),
+           'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+           'remember_token' => Str::random(10),
+       ];
+   }
+}
+```
+
+## Models
+With Laravel, each database table can have a model representation using a model file which can be used to interact with that table using Laravel Eloquent ORM.
+
+
+# Advanced Questions
+## Relationships
+Relationships in Laravel are a way to define relations between different models in the applications.
+
+## Eloquent
+ Eloquent is the ORM used to interact with the database using Model classes. It gives handy methods on class objects to make a query on the database.  It can directly be used to retrieve data from any table and run any raw query. But in conjunction with Models, we can make use of its various methods and also make use of relationships and attributes defined on the model.
+
+ ## Throttling
+Throttling is a process to rate-limit requests from a particular IP. This can be used to prevent DDOS attacks as well.
+```
+ Route::middleware('auth:api', 'throttle:60,1')->group(function () {
+    Route::get('/user', function () {
+        //
+    });
+});
+```
+
+## Facades
+Facades are a way to register your class and its methods in Laravel Container so they are available in your whole application after getting resolved by Reflection.
+    The main benefit of using facades is we don’t have to remember long class names and also don’t need to require those classes in any other class for using them. It also gives more testability to the application.
+Facade Pattern
+![Facade Pattern](https://s3.ap-south-1.amazonaws.com/myinterviewtrainer-domestic/public_assets/assets/000/000/109/original/Facades.png?1615293174)
