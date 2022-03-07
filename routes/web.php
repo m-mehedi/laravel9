@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,12 @@ Route::get('/', function () {
 });
 Route::get('/table', function(){
     return view('table');
+});
+ 
+Route::get('/users', function () {
+    return Response::json([
+        'message'=>'success',
+        'user'=>'user1',
+        'type'=>'admin'
+    ]);
 });

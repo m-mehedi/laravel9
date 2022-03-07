@@ -27,11 +27,11 @@ Artisan is the command-line tool for Laravel to help the developer build the app
 4. **channel.php** - *For registering all your event broadcasting channels that your application supports.*
 
 ## Migrations
-Migrations are used to create database schemas in Laravel.[^1].
+Migrations are used to create database schemas in Laravel.[^1]
 
-Run migrations to generate tables by commands.[^2].  
+Run migrations to generate tables by commands.[^2]
 
-You can also use words, to fit your writing style more closely[^note].
+You can also use words, to fit your writing style more closely.[^note]
 
 [^1]: Here  we store which table to create, update or delete.
 [^2]: > `PHP artisan migrate`
@@ -73,7 +73,7 @@ Factories are a way to put values in fields of a particular model automatically.
 Laravel comes with: 
 > database/factories/UserFactory.php
 
-We can crate new factory by:
+We can create new factory by:
 `php artisan make:factory UserFactory --class=User`
 
 Factory Example:
@@ -137,6 +137,16 @@ Throttling is a process to rate-limit requests from a particular IP. This can be
 ## Facades
 Facades are a way to register your class and its methods in Laravel Container so they are available in your whole application after getting resolved by Reflection.
     The main benefit of using facades is we don’t have to remember long class names and also don’t need to require those classes in any other class for using them. It also gives more testability to the application.
+Facades provide a static interface to classes that are available in the application's service container. Laravel facades serve as static proxies to underlying classes in the service container, providing the benefit of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods.
+The following are the steps to create Facade in Laravel −
+- Step 1 − Create PHP Class File.
+- Step 2 − Bind that class to Service Provider.
+- Step 3 − Register that ServiceProvider to
+    **Config\app.php** as providers.
+- Step 4 − Create Class which is this class extends to
+    lluminate\Support\Facades\Facade.
+- Step 5 − Register point 4 to **Config\app.php** as aliases.
+
 ### Facade Pattern
 ![Facade Pattern](https://s3.ap-south-1.amazonaws.com/myinterviewtrainer-domestic/public_assets/assets/000/000/109/original/Facades.png?1615293174)
 
@@ -211,6 +221,52 @@ public function store(Request $request)
 }
 ```
 ## Service Container
+The Laravel service container is a powerful tool for managing class dependencies and performing dependency injection. Dependency injection is a fancy phrase that essentially means this: class dependencies are "injected" into the class via the constructor or, in some cases, "setter" methods.
+```
+<?php
+ 
+namespace App\Http\Controllers;
+ 
+use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
+use App\Models\User;
+ 
+class UserController extends Controller
+{
+    /**
+     * The user repository implementation.
+     *
+     * @var UserRepository
+     */
+    protected $users;
+ 
+    /**
+     * Create a new controller instance.
+     *
+     * @param  UserRepository  $users
+     * @return void
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->users = $users;
+    }
+ 
+    /**
+     * Show the profile for the given user.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $user = $this->users->find($id);
+ 
+        return view('user.profile', ['user' => $user]);
+    }
+}
+```
+    In this example, the UserController needs to retrieve users from a data source. So, we will inject a service that is able to retrieve users. In this context, our UserRepository most likely uses Eloquent to retrieve user information from the database. However, since the repository is injected, we are able to easily swap it out with another implementation. We are also able to easily "mock", or create a dummy implementation of the UserRepository when testing our application.
+
 Service Container or IoC in laravel is responsible for managing class dependencies meaning not every file needs to be injected in class manually but is done by the Service Container automatically. Service Container is mainly used in injecting class in controllers like Request object is injected. We can also inject a Model based on id in route binding.
 For example, a route like below:
 ```
