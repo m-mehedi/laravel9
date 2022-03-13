@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Address;
 
 class User extends Authenticatable
 {
@@ -47,4 +48,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     } 
+    
+    public function address()
+    {
+        return $this->hasOne(Address::class, 
+        'uid', // foreign key
+        'id' // local key
+    );
+    } 
+
 }
