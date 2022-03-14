@@ -14,4 +14,8 @@ class Address extends Model
     public function user(){
         return $this->belongsTo(User::class, 'uid');
     }
+    
+    public function addresses(){
+        return $this->hasMany(Address::class, 'uid');
+    }
 }

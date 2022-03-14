@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Post;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,16 @@ Route::get('/table', function(){
     return view('table');
 });
 
+Route::get('/posts', function(){
+    // Post::create([
+    //     'title' => 'Title 12',
+    //     'description' => 'Description Twelve'
+    // ]);
+    $posts = Post::all();
+    // return $posts;
+    return view('posts.index', compact('posts'));
+});
+
 function generateRandomString($length = 2) {
     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -39,12 +50,12 @@ Route::get('/user', function(){
     // \App\Models\User::factory(1)->create();
 
     // Relation using associate 
-    $user = User::factory()->create();
-    $address = new Address([
-        'country' => 'UK'
-    ]);
-    $address->user()->associate($user);
-    $address->save();
+    // $user = User::factory()->create();
+    // $address = new Address([
+    //     'country' => 'UK'
+    // ]);
+    // $address->user()->associate($user);
+    // $address->save();
 
 
     // $user =  User::factory()->create();
@@ -64,7 +75,7 @@ Route::get('/user', function(){
 //    $users = User::all();
 //    $addresses = Address::all();
 $addresses = Address::with('user')->get();
-Debugbar::info($addresses);
+// Debugbar::info($addresses);      
    
 Debugbar::addMessage('Another message', 'Threshold');
 Debugbar::warning('Warning');
@@ -73,11 +84,16 @@ Debugbar::startMeasure('render','Time for rendering');
 Debugbar::stopMeasure('render');
 Debugbar::addMeasure('now', LARAVEL_START, microtime(true));
 Debugbar::measure('My long operation', function() {
- echo ('Render');
 });
-
+// $users = User::with('addresses')->get();
+$users = User::doesntHave('posts')->with('posts')->get();
+// $users = User::whereHas('posts', function($q){
+//     $q->where('title','like','%Title%');
+// })->with('posts')->get();
+// $users[0]->addresses()->create([ 'country' => 'AU']);
+// dd($users);
 //    return $address;
-return view('users.index', compact('addresses'));
+return view('users.index', compact('users','addresses'));
 });
  
 Route::get('/users', function () {

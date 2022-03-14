@@ -44,10 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    } 
+    // public function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // } 
     
     public function address()
     {
@@ -56,5 +56,13 @@ class User extends Authenticatable
         'id' // local key
     );
     } 
+    
+    public function addresses(){
+        return $this->hasMany(Address::class, 'uid');
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class,'uid');
+    }
 
 }
