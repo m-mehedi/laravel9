@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Address;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -26,12 +27,35 @@ Route::get('/table', function(){
     return view('table');
 });
 
+Route::get('/tags',function(){
+    $tags = Tag::with('posts')->get();
+    // dd($tags);
+    return view('tags.index', compact('tags'));
+}); 
+
 Route::get('/posts', function(){
     // Post::create([
     //     'title' => 'Title 12',
     //     'description' => 'Description Twelve'
     // ]);
-    $posts = Post::all();
+    // Tag::create([
+    //     'name'=> 'Laravel'
+    // ]);
+    // Tag::create([
+    //     'name'=> 'PHP'
+    // ]);
+    // Tag::create([
+    //     'name'=> 'JS'
+    // ]);
+
+    $tag = Tag::first();
+    $post = Post::with('tags')->get();
+    // dd($post);
+    // $post[0]->tags()->detach();
+    // $post[0]->tags()->sync([1,2]);
+    // $post->tags()->attach([2,4,5]);
+    // $post->tags()->attach($tag);
+    $posts = Post::with(['user','tags'])->get();
     // return $posts;
     return view('posts.index', compact('posts'));
 });
