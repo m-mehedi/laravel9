@@ -35,15 +35,23 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
+                        <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-                        </form>
+
+                            
+                            <?php 
+                            $category = \App\Models\Category::all();
+                            ?>
+                            <hr>
+                            @foreach ($category as $cat)
+                            <x-dropdown-link :href="route('category',['id'=>$cat->id])">
+                                    {{$cat->name}}
+                            </x-dropdown-link>
+                                @endforeach
                     </x-slot>
                 </x-dropdown>
             </div>

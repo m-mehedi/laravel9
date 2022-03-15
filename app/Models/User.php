@@ -53,12 +53,12 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany(Post::class);
     // } 
-    public static function boot(){
-        parent::boot();
-        static::created(function($user){
-            dd('From boot method', $user);
-        });
-    }
+    // public static function boot(){
+    //     parent::boot();
+    //     static::created(function($user){
+    //         dd('From boot method', $user);
+    //     });
+    // }
     
     public function address()
     {

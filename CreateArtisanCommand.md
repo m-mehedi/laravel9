@@ -2,7 +2,7 @@
 # php artisan make:notification SendDocLinkNotification
 # php artisan users:send_doc_link
 # php artisan make:event UserCreated
-# pa make:listener UserCreatedListener -e UserCreated
+# php artisan make:listener UserCreatedListener -e UserCreated
 
 Install Laravel Breeze
     `composer require laravel/breeze --dev`
@@ -10,3 +10,6 @@ Install Laravel Breeze
     `npm install`
     `npm run dev`
     `php artisan migrate`
+
+Create Events with Observers
+    `php artisan make:observer UserObserver --model=User`
