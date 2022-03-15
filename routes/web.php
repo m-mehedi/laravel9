@@ -35,7 +35,7 @@ Route::get('/tags',function(){
 
 Route::get('/posts', function(){
     // Post::create([
-    //     'title' => 'Title 12',
+    //     'title' => 'Title 12',   
     //     'description' => 'Description Twelve'
     // ]);
     // Tag::create([
@@ -50,7 +50,18 @@ Route::get('/posts', function(){
 
     $tag = Tag::first();
     $post = Post::with('tags')->get();
-    // dd($post);
+
+    $showAdditionalPivotField = $post[0]->tags->first()->pivot->status;
+    // // Passing extra field in pivot
+    // $post[0]->tags()->attach([
+    //     1 => [
+    //         'status' => 'approved'
+    //     ]
+    //     ]);
+
+    // $pivotDate = $post[0]->tags->first()->pivot->created_at;
+
+    // $post[0]->tags()->attach(1);
     // $post[0]->tags()->detach();
     // $post[0]->tags()->sync([1,2]);
     // $post->tags()->attach([2,4,5]);
