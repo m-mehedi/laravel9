@@ -15,9 +15,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $dispatchesEvents = [
-        'created' => UserCreated::class
-    ];
+    // protected $dispatchesEvents = [
+    //     'created' => UserCreated::class
+    // ];
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +53,12 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany(Post::class);
     // } 
+    public static function boot(){
+        parent::boot();
+        static::created(function($user){
+            dd('From boot method', $user);
+        });
+    }
     
     public function address()
     {
