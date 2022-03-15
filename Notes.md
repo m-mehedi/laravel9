@@ -379,3 +379,20 @@ Accessors are a way to retrieve data from eloquent after doing some operation on
     `$user->first_name = Input::get('first_name');`
     `$user->save();`
     It will change the first_name to be capitalized and it will save to the database
+
+
+
+
+#Model Events
+## 11 Events in model lifecycle
+    1. Retrived
+    2. Creating
+    3. Created
+    4. Updating
+    5. Updated
+    6. Saving
+    7. Saved
+    8. Deleting
+    9. Deleted
+    10. Restoring
+    11. Restored

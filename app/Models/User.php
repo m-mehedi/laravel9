@@ -9,10 +9,15 @@ use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Address;
+use App\Events\UserCreated;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class
+    ];
 
     /**
      * The attributes that are mass assignable.
