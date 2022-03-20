@@ -9,6 +9,9 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Cache; 
+
+use Illuminate\Support\Facades\Redis;
 use Barryvdh\Debugbar\Facade as Debugbar;
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +26,29 @@ use Barryvdh\Debugbar\Facade as Debugbar;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/redis', function(){
+    // $visits = Redis::incr('visits'); 
+    //  return $visits;
+
+    $category = Category::all();
+
+    Redis::set('category.all', $category);
+    Redis::set('name', 'MEHEDI');
+    Redis::setex('category.all', 60 * 60 * 24, $category); 
+    $values = Redis::lrange('names', 5, 10);
+    return $values;
+
+    // return Cache::remember('category.all', 60 * 60 * 24, function () { 
+    //     return Category::all(); 
+    // }); 
+
+    // return all category
+    // return $category;
+    //     $user = Redis::get('');
+    //     var_dump($user);
+    //     return view('dashboard', ['showUser' => $user, 'category'=>$category]);
 });
 
 Route::get('/dashboard', function () {
